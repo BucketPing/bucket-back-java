@@ -1,0 +1,33 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.BucketPing.mybatis.mapper.BucketMapper">
+    <insert id="insertBucket" useGeneratedKeys="true" keyProperty="bucketId">
+        insert into Bucket
+        (ownerId, title, description, maxCapacity,
+         progressStatus, startDate, endDate, createdAt)
+        values(#{ownerId}, #{title}, #{description}, #{maxCapacity}
+              #{progressStatus}, #{startDate}, #{endDate}, now())
+    </insert>
+
+    <insert id="insertCateggries">
+        <foreach collection="categories" item="categoryCode" separator=";">
+            insert into Bucket_Category
+            (bucketId, categoryCode) values (#{bucketId}, #{categoryCode})
+        </foreach>
+    </insert>
+
+    <update id="updateBucket">
+            update Bucket
+            set title = #{title}, description = #{description}, maxCapacity = #{maxCapactiy}
+                progressStatus = #{progressStatus}, startDate = #{startDate}, endDate = #{endDate}
+            where bucketId = #{bucketId}
+    </update>
+    <update id="updateCategories">
+        <foreach collection="categories" item="categoryCode" separator=";">
+            update Bucket_Category
+            set categoryCode = #{categoryCode}
+            where bucketId = #{BucketId}
+        </foreach>
+    </update>
+</mapper>
